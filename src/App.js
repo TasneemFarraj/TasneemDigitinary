@@ -4,6 +4,8 @@ import ChatWindow from "./Components/ChatWindow";
 import MessageInput from "./Components/MessageInput";
 import UserList from "./Components/UserList";
 import "./App.css";
+import UserForm from "./Components/UserForm";
+import FormInput from "./Components/FormInput";
 
 function App() {
   return (
@@ -11,7 +13,10 @@ function App() {
         <ChatWindow />
         <MessageInput />
         <UserList />
+         <UserForm/>
+         <FormInput/>
     </ChatProvider>
+   
   );
 }
 
