@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import FormInput from './FormInput';
-import Button from './Button';
+import Button from '../Button';
 
 const UserForm = () => {
   const [formData, setFormData] = useState({
@@ -14,10 +14,17 @@ const UserForm = () => {
   });
 
   const [errors, setErrors] = useState({});
-  const countries=['Jordan', 'Egypt', 'Syria', 'Palestine', 'Qatar', 'Yaman'];
+  const countries = ['Jordan', 'Egypt', 'Syria', 'Palestine', 'Qatar', 'Yaman'];
 
   const validateField = (name, value) => {
     let error = '';
+  
+    const valueToValidate = name === 'terms' ? value : String(value).trim();
+  
+    if (valueToValidate === '' && name !== 'terms') {
+      setErrors((prev) => ({ ...prev, [name]: '' }));
+      return;
+    }
 
     switch (name) {
       case 'fullName':
@@ -83,6 +90,10 @@ const UserForm = () => {
         onChange={handleChange}
         error={errors.fullName}
         placeholder="Enter your full name"
+        required={true}
+        helperText="Enter your full legal name."
+
+
       />
       <FormInput
         label="Email Address"
@@ -92,6 +103,10 @@ const UserForm = () => {
         onChange={handleChange}
         error={errors.email}
         placeholder="Enter your email"
+        required={true}
+        helperText="Provide a valid email address contain @ and dot"
+
+
       />
       <FormInput
         label="Password"
@@ -101,6 +116,10 @@ const UserForm = () => {
         onChange={handleChange}
         error={errors.password}
         placeholder="Enter a strong password"
+        required={true}
+        helperText="Password should be at least 8 characters long contains at least 1 upper case and 1 special char and number."
+
+
       />
       <FormInput
         label="Phone Number"
@@ -110,15 +129,22 @@ const UserForm = () => {
         onChange={handleChange}
         error={errors.phone}
         placeholder="Enter your phone number"
+        required={true}
+        helperText="Include your country code (e.g., +1, +44)."
+
+
       />
       <FormInput
         label="Age"
-        type="text"  
+        type="text"
         name="age"
         value={formData.age}
         onChange={handleChange}
         error={errors.age}
         placeholder="Enter your age"
+        required={true}
+        helperText="Provide your age."
+
       />
       <FormInput
         label="Country"
@@ -128,21 +154,27 @@ const UserForm = () => {
         onChange={handleChange}
         options={countries}
         error={errors.country}
+        required={true}
+        helperText="Select the country you currently reside in."
+
+
       />
-    <div className="form-group agree-group">
-  <label htmlFor="terms" className="form-label agree-label">
-    <input
-      type="checkbox"
-      id="terms"
-      name="terms"
-      checked={formData.terms}
-      onChange={handleChange}
-      className="form-input-checkbox"
-    />
-    Agree to Terms
-  </label>
-  {errors.terms && <p className="form-error">{errors.terms}</p>}
-</div>
+      <div className="form-group agree-group">
+        <label htmlFor="terms" className="form-label agree-label">
+          <input
+            type="checkbox"
+            id="terms"
+            name="terms"
+            checked={formData.terms}
+            onChange={handleChange}
+            className="form-input-checkbox"
+            helperText="You must agree to proceed."
+
+          />
+          Agree to Terms
+        </label>
+        {errors.terms && <p className="form-error">{errors.terms}</p>}
+      </div>
       <Button
         text="Submit"
         onClick={handleSubmit}

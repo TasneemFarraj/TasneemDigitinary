@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import ChatContext from "../Context/ChatContext";
+import ChatContext from "../../Context/ChatContext";
 
 const MessageInput = () => {
   const [message, setMessage] = useState("");
