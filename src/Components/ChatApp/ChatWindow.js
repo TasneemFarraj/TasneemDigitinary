@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import ChatContext from "../../Context/ChatContext";
 import Message from "./Message";
+import '../../Style/ChatApp.css';
+
 
 const ChatWindow = () => {
   const { messages, chatWindowRef } = useContext(ChatContext);

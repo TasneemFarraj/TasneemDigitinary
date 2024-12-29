@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import ChatContext from "../../Context/ChatContext";
+import '../../Style/ChatApp.css';
 
 const UserList = () => {
   const { isTyping } = useContext(ChatContext);

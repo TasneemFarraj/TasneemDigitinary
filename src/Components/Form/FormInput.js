@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { FaInfoCircle } from 'react-icons/fa'
+import '../../Style/Form.css';
 
 
 const FormInput = ({
