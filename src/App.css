@@ -296,3 +296,11 @@ body {
     opacity: 1;
   }
 }
+/* Ensure you have these in your CSS file */
+#iceCreamContainer {
+  position: relative; /* or absolute if needed */
+  z-index: 1; /* Ensure this is higher than other elements if necessary */
+  visibility: visible; /* Ensures the component is visible */
+  height: auto; /* Adjust as needed */
+  width: auto; /* Adjust as needed */
+}

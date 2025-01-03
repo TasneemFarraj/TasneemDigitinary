@@ -1,29 +1,33 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTasks } from "../../Context/TaskContext";
+import { useDispatch, useSelector } from "react-redux";
+import { addFavorite, removeFavorite } from "../../redux/features/tasks/favoriteSlice";
+import { toggleFavorite } from "../../redux/features/tasks/favoriteSlice";
+
 import "../../Style/TaskManagement.css";
 
 const TaskList = () => {
-  const { Tasks, editTask, deleteTask } = useTasks();
+  const { Tasks, favorites: contextFavorites, editTask, deleteTask, toggleFavorite: toggleContextFavorite } = useTasks();
+  const reduxFavorites = useSelector((state) => state.favorites.favorites);
+  const dispatch = useDispatch();
+
   const [editableTaskId, setEditableTaskId] = useState(null);
   const [editedTask, setEditedTask] = useState({});
   const [errors, setErrors] = useState({});
-  const [filterPriority, setFilterPriority] = useState(""); 
-  const [filterDueDate, setFilterDueDate] = useState(""); 
+  const [filterPriority, setFilterPriority] = useState("");
+  const [filterDueDate, setFilterDueDate] = useState("");
   const [sortOption, setSortOption] = useState("");
 
   const validate = (task) => {
     const newErrors = {};
-    if (!task.taskName || task.taskName.length < 3)
-      newErrors.taskName = "Task name must be at least 3 characters.";
-    if (!task.dueDate || new Date(task.dueDate) < new Date())
-      newErrors.dueDate = "Due date must not be in the past.";
+    if (!task.taskName || task.taskName.length < 3) newErrors.taskName = "Task name must be at least 3 characters.";
+    if (!task.dueDate || new Date(task.dueDate) < new Date()) newErrors.dueDate = "Due date must not be in the past.";
     if (!task.priority) newErrors.priority = "Priority is required.";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-//Editing
   const handleEdit = (task) => {
     setEditableTaskId(task.id);
     setEditedTask(task);
@@ -37,7 +41,6 @@ const TaskList = () => {
     }
   };
 
-// Filtering
   const filteredTasks = Tasks.filter((task) => {
     let matchesPriority = true;
     let matchesDueDate = true;
@@ -58,7 +61,6 @@ const TaskList = () => {
     return matchesPriority && matchesDueDate;
   });
 
-  // Sorting
   const priorityOrder = { Low: 1, Medium: 2, High: 3 };
 
   const sortedTasks = [...filteredTasks].sort((a, b) => {
@@ -74,15 +76,20 @@ const TaskList = () => {
     return 0;
   });
 
+  const isFavoriteContext = (taskId) => contextFavorites.some((favTask) => favTask.id === taskId);
+  const isFavoriteRedux = (taskId) => reduxFavorites.some((favTask) => favTask.id === taskId);
+
   return (
-    <motion.div
-      className="task-list-container"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
+    <motion.div className="task-list-container" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
       <h2>Task List</h2>
-      
+      <div className="view-favorites-container">
+      <button className="view-favorites-button" onClick={() => window.location.href = '/favorites'}>
+        View Context Favorites
+      </button>
+      <button className="view-favorites-button" onClick={() => window.location.href = '/favorites-redux'}>
+        View Redux Favorites
+      </button>
+      </div>
       <div className="task-controls">
         <select onChange={(e) => setFilterPriority(e.target.value)} value={filterPriority}>
           <option value="">Filter by Priority</option>
@@ -114,6 +121,7 @@ const TaskList = () => {
                 <th>Priority</th>
                 <th>Description</th>
                 <th>Actions</th>
+                <th>Favorites</th>
               </tr>
             </thead>
             <tbody>
@@ -126,60 +134,40 @@ const TaskList = () => {
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <td>
-                      {editableTaskId === task.id ? (
-                        <input
-                          type="text"
-                          value={editedTask.taskName}
-                          onChange={(e) =>
-                            setEditedTask({ ...editedTask, taskName: e.target.value })
-                          }
-                        />
-                      ) : (
-                        task.taskName
-                      )}
-                    </td>
-                    <td>
-                      {editableTaskId === task.id ? (
-                        <input
-                          type="date"
-                          value={editedTask.dueDate}
-                          onChange={(e) =>
-                            setEditedTask({ ...editedTask, dueDate: e.target.value })
-                          }
-                        />
-                      ) : (
-                        task.dueDate
-                      )}
-                    </td>
-                    <td>
-                      {editableTaskId === task.id ? (
-                        <select
-                          value={editedTask.priority}
-                          onChange={(e) =>
-                            setEditedTask({ ...editedTask, priority: e.target.value })
-                          }
-                        >
-                          <option value="Low">Low</option>
-                          <option value="Medium">Medium</option>
-                          <option value="High">High</option>
-                        </select>
-                      ) : (
-                        task.priority
-                      )}
-                    </td>
-                    <td>
-                      {editableTaskId === task.id ? (
-                        <textarea
-                          value={editedTask.description}
-                          onChange={(e) =>
-                            setEditedTask({ ...editedTask, description: e.target.value })
-                          }
-                        />
-                      ) : (
-                        task.description
-                      )}
-                    </td>
+                    <td>{editableTaskId === task.id ? (
+                      <input
+                        type="text"
+                        value={editedTask.taskName}
+                        onChange={(e) => setEditedTask({ ...editedTask, taskName: e.target.value })}
+                      />
+                    ) : task.taskName}</td>
+
+                    <td>{editableTaskId === task.id ? (
+                      <input
+                        type="date"
+                        value={editedTask.dueDate}
+                        onChange={(e) => setEditedTask({ ...editedTask, dueDate: e.target.value })}
+                      />
+                    ) : task.dueDate}</td>
+
+                    <td>{editableTaskId === task.id ? (
+                      <select
+                        value={editedTask.priority}
+                        onChange={(e) => setEditedTask({ ...editedTask, priority: e.target.value })}
+                      >
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                      </select>
+                    ) : task.priority}</td>
+
+                    <td>{editableTaskId === task.id ? (
+                      <textarea
+                        value={editedTask.description}
+                        onChange={(e) => setEditedTask({ ...editedTask, description: e.target.value })}
+                      />
+                    ) : task.description}</td>
+
                     <td>
                       {editableTaskId === task.id ? (
                         <>
@@ -193,6 +181,21 @@ const TaskList = () => {
                         </>
                       )}
                     </td>
+
+                    <td>
+                      <button
+                        onClick={() => toggleContextFavorite(task)}
+                        style={{ backgroundColor: isFavoriteContext(task.id) ? "#f48924" : "#ccc" }}
+                      >
+                        {isFavoriteContext(task.id) ? "Unfavorite (Context)" : "Favorite (Context)"}
+                      </button>
+                      <button
+            onClick={() => dispatch(toggleFavorite(task))}
+            style={{ backgroundColor: isFavoriteRedux(task.id) ? "#52325d" : "#ccc" }}
+                      >
+            {isFavoriteRedux(task.id) ? "Unfavorite (Redux)" : "Favorite (Redux)"}
+                      </button>
+                    </td>
                   </motion.tr>
                 ))}
               </AnimatePresence>
@@ -202,6 +205,7 @@ const TaskList = () => {
           <p className="task-message">No tasks available, add a task to get started.</p>
         )}
       </div>
+
     </motion.div>
   );
 };
