@@ -1,12 +1,16 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
+  const cartItems = useSelector((state) => state.cart.items);
+  const cartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+
   return (
     <nav className="navbar">
       <div className="navbar-logo">
         <NavLink to="/">
-          <img src="\DigitLogo.png" alt="Logo" className="logo-image" />
+          <img src="/DigitLogo.png" alt="Logo" className="logo-image" />
         </NavLink>
       </div>
       <ul className="navbar-links">
@@ -18,7 +22,6 @@ const Navbar = () => {
             Chat
           </NavLink>
         </li>
-        
         <li>
           <NavLink
             to="/user-form"
@@ -27,6 +30,7 @@ const Navbar = () => {
             User Form
           </NavLink>
         </li>
+
         <li>
           <NavLink
             to="/tasks"
@@ -35,6 +39,40 @@ const Navbar = () => {
             Tasks
           </NavLink>
         </li>
+        <li>
+          <NavLink
+            to="/products"
+            className={({ isActive }) => (isActive ? "active-link" : "")}
+          >
+            Products
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/cart"
+            className={({ isActive }) => (isActive ? "active-link" : "")}
+          >
+            Cart {cartCount > 0 && `(${cartCount})`} 
+          </NavLink>
+        </li>
+        <div className="navbar-auth">
+        <li>
+          <NavLink
+            to="/login"
+            className={({ isActive }) => (isActive ? "active-link" : "")}
+          >
+            <button className="auth-btn">LogIn</button>
+            </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/signup"
+            className={({ isActive }) => (isActive ? "active-link" : "")}
+          >
+            <button className="auth-btn">SignUp</button>
+          </NavLink>
+        </li>
+        </div>
       </ul>
     </nav>
   );

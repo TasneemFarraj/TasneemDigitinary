@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
-import { PersistGate } from 'redux-persist/integration/react';
+import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./redux/store";
 import Navbar from "./Components/Navbar";
 import ChatWindow from "./Components/ChatApp/ChatWindow";
@@ -15,10 +15,17 @@ import { TaskProvider } from "./Context/TaskContext";
 import HomePage from "./Components/HomePage";
 import FavoriteTasksAPI from "./Components/TaskManagement/FavoriteTasksAPI";
 import FavoriteTasksRedux from "./Components/TaskManagement/FavoriteTaskRedux";
+import ProductList from "./Components/Product/ProductList"; 
+import WelcomePage from "./Components/WelcomePage";
+import Login from "./Components/Auth/Login"; 
+import Signup from "./Components/Auth/Signup"; 
+import CartPage from "./Components/Product/CartPage";
+
 
 import "./App.css";
 
 function App() {
+
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
@@ -48,6 +55,12 @@ function App() {
                     </div>
                   }
                 />
+                <Route path="/products" element={<ProductList />} /> 
+                <Route path="/" element={<WelcomePage />} />
+                <Route path="/login" element={<Login />} /> 
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/cart" element={<CartPage />} />
+
                 <Route path="/favorites" element={<FavoriteTasksAPI />} />
                 <Route path="/favorites-redux" element={<FavoriteTasksRedux />} />
               </Routes>

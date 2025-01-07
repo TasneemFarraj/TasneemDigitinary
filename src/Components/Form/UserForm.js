@@ -134,7 +134,6 @@ const UserForm = () => {
         required={true}
         helperText="Include your country code (e.g., +1, +44)."
 
-
       />
       <FormInput
         label="Age"
