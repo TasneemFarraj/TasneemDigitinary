@@ -84,7 +84,7 @@ const CartPage = () => {
                     </div>
                     <div className="item-actions">
                       <button onClick={() => handleRemove(item.id)} className="remove-button">
-                        Delete
+                        Remove
                       </button>
                     </div>
                   </li>
