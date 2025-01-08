@@ -19,18 +19,18 @@ const authSlice = createSlice({
       state.token = null;
       state.isAuthenticated = false;
       state.error = null;
-      localStorage.removeItem("token"); // Clear token from local storage
+      localStorage.removeItem("token"); 
     },
     simulateLogin: (state) => {
-      state.token = "staticToken"; // Assign a static token
-      state.isAuthenticated = true; // Mark the user as authenticated
-      localStorage.setItem("token", "staticToken"); // Store the token in local storage
+      state.token = "staticToken"; 
+      state.isAuthenticated = true;
+      localStorage.setItem("token", "staticToken");
     },
     simulateLogout: (state) => {
       state.user = null;
       state.token = null;
       state.isAuthenticated = false;
-      localStorage.removeItem("token"); // Remove the token from local storage
+      localStorage.removeItem("token"); 
     },
   },
   extraReducers: (builder) => {
@@ -41,10 +41,10 @@ const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.token = action.payload.token; // Simulated token or backend-provided token
+        state.token = action.payload.token; 
         state.user = action.payload.user;
         state.isAuthenticated = true;
-        localStorage.setItem("token", action.payload.token); // Save token in local storage
+        localStorage.setItem("token", action.payload.token); 
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;

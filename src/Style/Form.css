@@ -136,4 +136,7 @@ form {
     color:#23aba9 ;
     scale: 1.1;
   }
-  
+  .auth-container h2{
+    font-family: "Kaushan Script", serif;
+    color: #333;
+  }

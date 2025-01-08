@@ -7,12 +7,12 @@ export const validateField = (name, value) => {
       break;
     case 'email':
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(value)) error = 'Invalid email format.';
+      if (!emailRegex.test(value)) error = 'Invalid email address.';
       break;
     case 'password':
-      const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
+      const passwordRegex = /^[a-zA-Z0-9]+$/;
       if (!passwordRegex.test(value))
-        error = 'Password must be at least 8 characters, include a number and a special character.';
+        error = 'Password must be at least 6 characters,contain only letters and numbers';
       break;
     default:
       break;
