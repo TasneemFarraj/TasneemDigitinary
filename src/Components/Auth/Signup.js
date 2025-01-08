@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signup } from "../../redux/features/auth/authThunks";
 import { useNavigate } from "react-router-dom";
+import FormInput from "../Form/FormInput";  
+import { validateField } from "../Utils/Validation"; 
+import Button from "../Button";
 
 const SignupPage = () => {
   const dispatch = useDispatch();
@@ -15,19 +18,32 @@ const SignupPage = () => {
     avatar: "https://via.placeholder.com/150",
   });
 
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+    name: "",
+  });
+
+  const [rememberMe, setRememberMe] = useState(false); 
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!/^[a-zA-Z0-9]+$/.test(userDetails.password)) {
-      alert("Password must contain only letters and numbers.");
-      return;
-    }
+    const newErrors = {
+      email: validateField("email", userDetails.email),
+      password: validateField("password", userDetails.password),
+      name: validateField("fullName", userDetails.name),
+    };
 
-    dispatch(signup(userDetails)).then((result) => {
-      if (result.meta.requestStatus === "fulfilled") {
-        navigate("/login"); 
-      }
-    });
+    setErrors(newErrors);
+
+    if (!newErrors.email && !newErrors.password && !newErrors.name) {
+      dispatch(signup(userDetails)).then((result) => {
+        if (result.meta.requestStatus === "fulfilled") {
+          navigate("/login");
+        }
+      });
+    }
   };
 
   return (
@@ -36,41 +52,63 @@ const SignupPage = () => {
       {status === "loading" && <p>Loading...</p>}
       {error && <p className="error">Error: {error}</p>}
       <form onSubmit={handleSubmit}>
-        <input
+        <FormInput
+          label="Name"
           type="text"
-          placeholder="Name"
+          name="name"
           value={userDetails.name}
           onChange={(e) => setUserDetails({ ...userDetails, name: e.target.value })}
+          error={errors.name}
+          placeholder="Name"
           required
         />
-        <input
+        <FormInput
+          label="Email"
           type="email"
-          placeholder="Email"
+          name="email"
           value={userDetails.email}
           onChange={(e) => setUserDetails({ ...userDetails, email: e.target.value })}
+          error={errors.email}
+          placeholder="Email"
           required
         />
-        <input
+        <FormInput
+          label="Password"
           type="password"
-          placeholder="Password"
+          name="password"
           value={userDetails.password}
           onChange={(e) => setUserDetails({ ...userDetails, password: e.target.value })}
+          error={errors.password}
+          placeholder="Password"
           required
         />
-        <input
+        <FormInput
+          label="Avatar URL"
           type="url"
-          placeholder="Avatar URL"
+          name="avatar"
           value={userDetails.avatar}
           onChange={(e) => setUserDetails({ ...userDetails, avatar: e.target.value })}
+          placeholder="Avatar URL (optional)"
         />
-        <button type="submit">Sign Up</button>
+        
+        <div className="remember-me">
+          <input 
+            type="checkbox" 
+            id="rememberMe" 
+            checked={rememberMe} 
+            onChange={() => setRememberMe(!rememberMe)} 
+          />
+          <label htmlFor="rememberMe">Remember Me</label>
+        </div>
+
+        <Button
+          text="Signup"
+          onClick={handleSubmit}
+          className="primary"
+        />
       </form>
-      <p>
-        Already have an account? <button onClick={() => navigate("/login")}>Log in</button>
-      </p>
     </div>
   );
 };
 
 export default SignupPage;
-

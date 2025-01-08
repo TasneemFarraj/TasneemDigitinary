@@ -112,4 +112,28 @@ form {
     transform: rotate(45deg);
     z-index: -1;
   }
+
+  .remember-me {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    margin-bottom: 10px;
+  }
+  
+  .remember-me input {
+    margin-right: 8px;
+  }
+  
+  .remember-me label {
+    font-size: 14px;
+  }
+  .signup-link{
+    text-decoration: none;
+    color:#333333 ;
+  }
+  .signup-link:hover{
+    text-decoration: none;
+    color:#23aba9 ;
+    scale: 1.1;
+  }
   
