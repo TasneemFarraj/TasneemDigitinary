@@ -1,6 +1,5 @@
-
 import { createSlice } from "@reduxjs/toolkit";
-import { login, signup, loadUserFromToken, logout } from "./authThunks";
+import { login, signup, loadUserFromToken, logout, updateUser, deleteUser } from "./authThunks";
 
 const initialState = {
   user: null,
@@ -19,18 +18,7 @@ const authSlice = createSlice({
       state.token = null;
       state.isAuthenticated = false;
       state.error = null;
-      localStorage.removeItem("token"); 
-    },
-    simulateLogin: (state) => {
-      state.token = "staticToken"; 
-      state.isAuthenticated = true;
-      localStorage.setItem("token", "staticToken");
-    },
-    simulateLogout: (state) => {
-      state.user = null;
-      state.token = null;
-      state.isAuthenticated = false;
-      localStorage.removeItem("token"); 
+      localStorage.removeItem("token");
     },
   },
   extraReducers: (builder) => {
@@ -41,10 +29,10 @@ const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.token = action.payload.token; 
+        state.token = action.payload.token;
         state.user = action.payload.user;
         state.isAuthenticated = true;
-        localStorage.setItem("token", action.payload.token); 
+        localStorage.setItem("token", action.payload.token);
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
@@ -67,11 +55,24 @@ const authSlice = createSlice({
         state.user = null;
         state.token = null;
         state.isAuthenticated = false;
-        localStorage.removeItem("token"); 
+        localStorage.removeItem("token");
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+        state.error = action.payload;
+      })
+      .addCase(deleteUser.fulfilled, (state) => {
+        state.user = null;
+        state.token = null;
+        state.isAuthenticated = false;
+      })
+      .addCase(deleteUser.rejected, (state, action) => {
+        state.error = action.payload;
       });
   },
 });
 
-export const { clearAuthState, simulateLogin, simulateLogout } = authSlice.actions;
-
+export const { clearAuthState } = authSlice.actions;
 export default authSlice.reducer;

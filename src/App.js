@@ -22,6 +22,7 @@ import CartPage from "./Components/Product/CartPage";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import WelcomePage from "./Components/WelcomePage";
 import "./App.css";
+import ManageAccount from "./Components/Auth/ManageAccount";
 
 function App() {
   const [showWelcome, setShowWelcome] = useState(true);
@@ -77,6 +78,7 @@ function App() {
     <Route path="/cart" element={<CartPage />} />
     <Route path="/favorites" element={<FavoriteTasksAPI />} />
     <Route path="/favorites-redux" element={<FavoriteTasksRedux />} />
+    <Route path="/account" element={<ManageAccount/>}/>
 </Routes>
 
               {showWelcome && (
