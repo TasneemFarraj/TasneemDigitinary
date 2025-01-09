@@ -25,6 +25,8 @@ body {
 .button.primary {
   background-color: #23aba9;
   color: #ffffff;
+  font-family: "Kaushan Script", serif;
+
 }
 
 .button:hover {
@@ -283,7 +285,7 @@ input[type="email"]:focus {
   outline: none;
 }
 
-.button-container {
+.button-cont {
   display: flex;
   justify-content: space-between;
   gap: 15px;

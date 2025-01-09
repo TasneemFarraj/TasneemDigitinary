@@ -92,7 +92,7 @@ const ManageAccount = () => {
       </div>
 
       {isEditing ? (
-        <div className="button-container">
+        <div className="button-cont">
           <button className="primary-btn save-btn" onClick={handleSave}>
             Save Changes
           </button>
@@ -101,7 +101,7 @@ const ManageAccount = () => {
           </button>
         </div>
       ) : (
-        <div className="button-container">
+        <div className="button-cont">
           <button className="primary-btn edit-btn" onClick={() => setIsEditing(true)}>
             Edit Account
           </button>

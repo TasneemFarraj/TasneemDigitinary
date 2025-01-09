@@ -70,7 +70,7 @@ body {
 .product-price {
   font-size: 1.2rem;
   font-weight: bold;
-  color: #ff9f00;
+  color:#ff9f00;
 }
 
 .add-new-product-btn {
@@ -144,6 +144,7 @@ body {
   background-color: #ff7f00;
 }
 
+
 .cancel-btn {
   background-color: red;
   color: white;
@@ -170,10 +171,12 @@ body {
   align-items: center;
   justify-content: center;
   margin-top: 10px;
+  font-family: "Didact Gothic", serif;
+
 }
 
 .CartBtn:hover {
-  background-color: #ff7f00;
+  background-color: #e0a800;
 }
 
 .CartBtn .IconContainer {
@@ -189,29 +192,42 @@ body {
 .edit-btn,
 .delete-btn {
   width: 48%; 
+  font-weight: 600;
   padding: 8px 12px;
   border-radius: 5px;
   cursor: pointer;
   border: none;
-
+    font-family: "Kaushan Script", serif;
 
 }
 
 .edit-btn {
-  background-color: #ffd000;
+  background-color: #ff9f00;
+  color: #d3d3d3;
+  font-family: "Didact Gothic", serif;
+
 }
 
 .edit-btn:hover {
-  background-color: #e1be1f;
+  background-color: hsl(45, 100%, 63%);
+  color: #0d0e0d;
 }
 
 .delete-btn {
-  background-color: rgb(224, 44, 44);
+  background-color: transparent;
+  color: #c82333;
+  border: 2px solid #c82333;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s;
+  font-family: "Didact Gothic", serif;
+
 }
 
 .delete-btn:hover {
-  background-color: rgb(255, 21, 21);
+  background-color: #c82333;
+  color: #fff;
+  transform: scale(1.05);
 }
+
 
 .CartBtn {
   width: 100%px;
@@ -229,7 +245,7 @@ body {
   position: relative;
 }
 .CartBtn:hover{
-  background:linear-gradient(to right, #ffd000, #23aba9)
+  background:linear-gradient(to right, #ff9f00, #23aba9)
 }
 .IconContainer {
   position: absolute;
@@ -266,7 +282,7 @@ body {
 .CartBtn:hover .IconContainer {
   transform: translateX(58px);
   border-radius: 40px;
-  background-color: #ffd000;
+  background-color: #ff9f00;
   transition-duration: .5s;
 }
 
@@ -462,33 +478,38 @@ body {
 }
 
 .remove-button {
-  background-color: #e74c3c;
-  color: white;
-  border: none;
+  background-color: transparent;
+  color: #c82333;
+  border: 2px solid #c82333;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s;
+  font-family: "Didact Gothic", serif;
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+
 }
 
 .remove-button:hover {
-  background-color: #c0392b;
-}
+  background-color: #c82333;
+  color: #fff;
+  transform: scale(1.05);}
 
 .clear-cart-button {
   margin-top: 15px;
-  background-color: #3498db;
-  color: white;
-  border: none;
+  background-color: transparent;
+  color: #c82333;
+  border: 2px solid #c82333;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s;
+  font-family: "Didact Gothic", serif;
   padding: 12px 20px;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s;
 }
 
 .clear-cart-button:hover {
-  background-color: #2980b9;
-}
+  background-color: #c82333;
+  color: #fff;
+  transform: scale(1.05);}
 
 .order-summary {
   flex: 1;
@@ -515,7 +536,7 @@ body {
   margin-top: 20px;
   font-size: 22px;
   font-weight: 600;
-  color: #2ecc71;
+  color:#c82333;
 }
 
 .checkout-button,
@@ -524,7 +545,7 @@ body {
   width: 100%;
   padding: 15px;
   margin-top: 20px;
-  background-color: #2ecc71;
+  background-color:#23aba9;
   color: white;
   border: none;
   border-radius: 8px;
@@ -534,17 +555,23 @@ body {
 }
 
 .checkout-button:hover {
-  background-color: #27ae60;
+  background-color:#1b8686;
+  transform: scale(1.05);
+
 }
 
 .continue-shopping-button {
-  background-color: #3498db;
-  margin-top: 10px;
+  background-color: transparent;
+  color:#23aba9;
+  border: 2px solid #23aba9;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s;
+  font-family: "Didact Gothic", serif;
 }
 
 .continue-shopping-button:hover {
-  background-color: #2980b9;
-}
+  background-color: #23aba9;
+  color: #fff;
+  transform: scale(1.05);}
 
 .empty-cart-message {
   font-size: 18px;
